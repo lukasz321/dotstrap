@@ -1,0 +1,31 @@
+alias ll='ls -al'
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+autoload -U colors && colors
+
+function parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+COLOR_DEF=$'%f'
+COLOR_USR=$'%F{243}'
+COLOR_DIR=$'%F{197}'
+COLOR_GIT=$'%F{49}'
+setopt PROMPT_SUBST
+
+function precmd {
+  export PROMPT='%{$fg[green]%}%n%{$reset_color%}:%{$fg[cyan]%}%0~%{$reset_color%}${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
+}
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

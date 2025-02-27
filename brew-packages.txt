@@ -1,0 +1,22 @@
+vim
+git
+curl
+wget
+sshpass
+postgresql
+redis
+redis-cli
+pgcli
+node
+python
+ffmpeg
+pyenv
+poetry
+black
+pylint
+the_silver_searcher
+net-tools
+--cask docker
+--cask pgadmin4
+--cask google-chrome
+--cask visual-studio-code

@@ -1,0 +1,50 @@
+set backspace=indent,eol,start
+
+set nocompatible              " be iMproved, required
+filetype on                  " required
+syntax on
+
+filetype plugin indent on    " required
+
+" Vim leaders
+let mapleader = " "
+
+" ------------------------------------------------------------------------------
+" General Settings
+" ------------------------------------------------------------------------------
+set history=100     " Default history is only 20
+set undolevels=100  " Use more levels of undo
+set laststatus=2    " always show status line @ botom
+set scrolloff=3     " minimum number of lines to have above/below cursor
+set lazyredraw
+set hidden          " keep buffers around
+set autoindent
+set autoread
+set backspace=indent,eol,start
+set complete-=i
+set display=lastline
+set encoding=utf-8
+set formatoptions=tcqj
+set history=10000
+set hlsearch
+set incsearch
+set langnoremap
+set laststatus=2
+set nrformats=hex
+set sessionoptions-=options
+set smarttab
+set tabpagemax=50
+set tags=./tags;,tags
+set ttyfast
+set viminfo+=!
+set wildmenu
+" set mouse=a         " mouse mode
+set guioptions-=M   " remove gvim errata
+
+" ------------------------------------------------------------------------------
+" Indentation
+" ------------------------------------------------------------------------------
+set smartindent
+set tabstop=4       
+set shiftwidth=4
+set softtabstop=4
