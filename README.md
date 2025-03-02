@@ -14,6 +14,8 @@ cat brew-packages.txt | xargs brew install
 brew services start redis
 brew services start postgresql
 
+# install Poetry
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 

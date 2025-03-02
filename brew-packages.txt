@@ -1,3 +1,4 @@
+shfmt
 vim
 git
 curl
@@ -11,7 +12,6 @@ node
 python
 ffmpeg
 pyenv
-poetry
 black
 pylint
 the_silver_searcher

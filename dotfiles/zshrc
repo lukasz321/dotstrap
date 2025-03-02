@@ -11,38 +11,54 @@ HISTSIZE=100000
 SAVEHIST=100000
 LISTMAX=999
 
+poetry_prompt() {
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    # Old Poetry (or manually activated venv)
+    env_name=$(basename "$VIRTUAL_ENV")
+    echo "($env_name)"
+  else
+    # New Poetry (auto-activated virtualenvs)
+    env_path=$(poetry env info -p 2>/dev/null)
+    if [[ -n "$env_path" ]]; then
+      env_name=$(basename "$env_path")
+      echo "($env_name)"
+    fi
+  fi
+}
+
 function parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+  git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
 
 COLOR_DEF=$'%f'
 COLOR_USR=$'%F{243}'
 COLOR_DIR=$'%F{197}'
 COLOR_GIT=$'%F{49}'
+COLOR_ENV=$'%F{89}'
 
 setopt PROMPT_SUBST
-setopt append_history           # append history to the history file, rather than replace it
-setopt inc_append_history       # history lines are added to the $HISTFILE as soon as they are entered
-setopt extended_history         # save command beginning timestamp and the duration
-setopt hist_reduce_blanks       # remove superfluous blanks from history
-setopt hist_ignore_dups         # do not save history line if it duplicates previous history event
-setopt hist_ignore_all_dups     # if new command duplicates an older one, remove the older from history
-setopt hist_expire_dups_first   # when delete duplicates in history, delete oldest history event
-setopt hist_save_no_dups        # when writing history, older commands that duplicate newer ones are omitted
-setopt hist_ignore_space        # do not save line to the history list when first character is a space
-setopt hist_verify              # perform history expansion and reload the line into the editing buffer
+setopt append_history         # append history to the history file, rather than replace it
+setopt inc_append_history     # history lines are added to the $HISTFILE as soon as they are entered
+setopt extended_history       # save command beginning timestamp and the duration
+setopt hist_reduce_blanks     # remove superfluous blanks from history
+setopt hist_ignore_dups       # do not save history line if it duplicates previous history event
+setopt hist_ignore_all_dups   # if new command duplicates an older one, remove the older from history
+setopt hist_expire_dups_first # when delete duplicates in history, delete oldest history event
+setopt hist_save_no_dups      # when writing history, older commands that duplicate newer ones are omitted
+setopt hist_ignore_space      # do not save line to the history list when first character is a space
+setopt hist_verify            # perform history expansion and reload the line into the editing buffer
 #setopt share_history            # share history between all sessions
-setopt auto_list                # automatically list choices on an ambiguous completion
-unsetopt beep                   # disable beep
+setopt auto_list # automatically list choices on an ambiguous completion
+unsetopt beep    # disable beep
 
-# git branch completion
+# git branch completion, poetry env
 function precmd {
-  export PROMPT='%{$fg_bold[green]%}%n@%m%{$reset_color%}:%{$fg_bold[blue]%}%0~%{$reset_color%}${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
+  export PROMPT='%{$fg_bold[green]%}%n@%m%{$reset_color%}:%{$fg_bold[blue]%}%0~%{$reset_color%}${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}${COLOR_ENV}$(poetry_prompt)${COLOR_DEF}%% '
 }
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -59,7 +75,6 @@ export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 
 #For pkg-config to find curl you may need to set:
 export PKG_CONFIG_PATH="/opt/homebrew/opt/curl/lib/pkgconfig"
-
 
 # ======
 # ======
