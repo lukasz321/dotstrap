@@ -76,5 +76,8 @@ export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 #For pkg-config to find curl you may need to set:
 export PKG_CONFIG_PATH="/opt/homebrew/opt/curl/lib/pkgconfig"
 
+# "Fix" to the new poetry env activate...
+alias poetry_shell='. "$(dirname $(poetry run which python))/activate"'
+
 # ======
 # ======
