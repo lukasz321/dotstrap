@@ -20,3 +20,4 @@ net-tools
 --cask pgadmin4
 --cask google-chrome
 --cask visual-studio-code
+lnav

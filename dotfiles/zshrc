@@ -11,21 +11,6 @@ HISTSIZE=100000
 SAVEHIST=100000
 LISTMAX=999
 
-poetry_prompt() {
-  if [[ -n "$VIRTUAL_ENV" ]]; then
-    # Old Poetry (or manually activated venv)
-    env_name=$(basename "$VIRTUAL_ENV")
-    echo "($env_name)"
-  else
-    # New Poetry (auto-activated virtualenvs)
-    env_path=$(poetry env info -p 2>/dev/null)
-    if [[ -n "$env_path" ]]; then
-      env_name=$(basename "$env_path")
-      echo "($env_name)"
-    fi
-  fi
-}
-
 function parse_git_branch() {
   git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
@@ -53,7 +38,7 @@ unsetopt beep    # disable beep
 
 # git branch completion, poetry env
 function precmd {
-  export PROMPT='%{$fg_bold[green]%}%n@%m%{$reset_color%}:%{$fg_bold[blue]%}%0~%{$reset_color%}${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}${COLOR_ENV}$(poetry_prompt)${COLOR_DEF}%% '
+  export PROMPT='%{$fg_bold[green]%}%n@%m%{$reset_color%}:%{$fg_bold[blue]%}%0~%{$reset_color%}${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%% '
 }
 
 export NVM_DIR="$HOME/.nvm"
