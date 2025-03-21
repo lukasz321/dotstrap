@@ -22,7 +22,7 @@ if ! command -v shfmt &> /dev/null; then
 fi
 
 # Create the pre-commit config file
-echo "Setting up pre-commit for Black..."
+echo "Setting up pre-commit for shfmt/black..."
 cat > .pre-commit-config.yaml << EOL
 repos:
 
@@ -46,4 +46,4 @@ EOL
 pre-commit install
 pre-commit autoupdate
 
-echo "Setup complete! Black will now run on every git commit."
+echo "Setup complete!"
